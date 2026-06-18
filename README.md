@@ -127,52 +127,56 @@ portfolio-forge/
 
 ## Deployment
 
-### Vercel (Recommended)
+### Option 1: Connect GitHub to Vercel (Recommended)
 
 1. **Push to GitHub:**
 ```bash
-git add .
-git commit -m "Deploy PortfolioForge"
-git remote add origin https://github.com/yourusername/portfolio-forge.git
+git remote add origin https://github.com/antono4/MYPORTOFOLIO.git
 git push -u origin main
 ```
 
 2. **Connect to Vercel:**
    - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your GitHub repository
-   - Select "Import Third-Party Git Repository" if needed
+   - Click "New Project" → "Import Git Repository"
+   - Select `antono4/MYPORTOFOLIO`
+   - Vercel will auto-detect Next.js framework
 
-3. **Add Environment Variables in Vercel Dashboard:**
-   - Go to Project Settings → Environment Variables
-   - Add all variables from `.env.example`:
-     ```
-     NEXT_PUBLIC_SUPABASE_URL
-     NEXT_PUBLIC_SUPABASE_ANON_KEY
-     SUPABASE_SERVICE_ROLE_KEY
-     NEXTAUTH_URL
-     NEXTAUTH_SECRET
-     GITHUB_CLIENT_ID
-     GITHUB_CLIENT_SECRET
-     STRIPE_SECRET_KEY
-     STRIPE_WEBHOOK_SECRET
-     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-     NEXT_PUBLIC_APP_URL
-     ```
+3. **Add Environment Variables:**
+   Go to Project Settings → Environment Variables and add:
+   
+   | Name | Value |
+   |------|-------|
+   | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase URL |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anon key |
+   | `NEXTAUTH_SECRET` | Generate at https://generate-secret.vercel.app |
+   | `NEXTAUTH_URL` | `https://your-project.vercel.app` |
+   | `GITHUB_CLIENT_ID` | From GitHub OAuth App |
+   | `GITHUB_CLIENT_SECRET` | From GitHub OAuth App |
+   | `STRIPE_SECRET_KEY` | `sk_test_...` |
+   | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | `pk_test_...` |
+   | `NEXT_PUBLIC_APP_URL` | `https://your-project.vercel.app` |
 
 4. **Deploy:**
-   - Click "Deploy" or push to main branch
-   - Your app will be live at `https://your-project.vercel.app`
+   - Click "Deploy"
+   - Done! Your app is live
 
-### GitHub Actions (CI/CD)
+### Option 2: GitHub Actions CI/CD
 
-The repository includes a GitHub Actions workflow in `.github/workflows/deploy.yml`. To use it:
+1. **Get Vercel Token:**
+   - Go to [vercel.com/account/tokens](https://vercel.com/account/tokens)
+   - Create a new token with name "GitHub-Actions"
 
-1. Add `VERCEL_TOKEN` to your GitHub repository secrets:
-   - Go to Settings → Secrets and variables → Actions
-   - Add New repository secret: `VERCEL_TOKEN`
+2. **Add Secret to GitHub:**
+   - Go to your repo → Settings → Secrets and variables → Actions
+   - Click "New repository secret"
+   - Name: `VERCEL_TOKEN`
+   - Value: paste your Vercel token
 
-2. The workflow will automatically deploy on push to main.
+3. **Push code:**
+   ```bash
+   git push origin main
+   ```
+   The workflow will automatically deploy!
 
 ### Manual Deployment
 
